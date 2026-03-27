@@ -12,3 +12,7 @@ lint:
 .PHONY: test
 test:
 	docker run --rm --interactive devcontainer-iac-alpine-awscli:local --version
+
+.PHONY: versioncheck-awscli
+versioncheck-awscli:
+	@curl -s "https://api.github.com/repos/aws/aws-cli/tags?per_page=100" | jq -r '[.[] | select(.name | test("^2[.][0-9]+[.][0-9]+$$"))][0].name'
